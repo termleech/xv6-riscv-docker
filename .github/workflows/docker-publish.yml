@@ -6,8 +6,9 @@ name: Docker Build & Publish
 # documentation.
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 env:
   # github.repository as <account>/<repo>
