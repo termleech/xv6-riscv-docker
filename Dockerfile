@@ -29,7 +29,6 @@ RUN apt-get -y update && \
 COPY --from=builder-riscv $HOME/install $HOME/install
 RUN git clone https://github.com/riscv/riscv-isa-sim.git
 WORKDIR $HOME/riscv-isa-sim
-# RUN git checkout v1.1.0
 WORKDIR $HOME/riscv-isa-sim/build
 RUN CC=gcc-12 CXX=g++-12 ../configure --prefix=$RISCV && CC=gcc-12 CXX=g++-12 make -j4 && make install
 WORKDIR $HOME
@@ -56,14 +55,14 @@ RUN apt-get -y update && \
       apt-get install -y autoconf automake autotools-dev gcc g++ curl python3 python3-pip libmpc-dev \
       libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev \
       libexpat-dev ninja-build git cmake libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev \
-      device-tree-compiler gcc-12 g++-12 && \
+      device-tree-compiler gcc-12 g++-12 sudo gdb man-db manpages-dev dos2unix && \
       rm -rf /var/lib/apt/lists/*
-# Create non-root user
+# Unminmize the system
+RUN yes| unminimize
+# Create non-root user & allow to sudo
 RUN groupadd --gid 1001 osuser
 RUN useradd -m -s /bin/bash --uid 1001 --gid osuser osuser
-# Allow user to sudo
-RUN apt-get update
-RUN apt install -y sudo gdb man-db manpages-dev
+RUN chown -R osuser:1001 $HOME
 RUN echo osuser ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/osuser
 COPY --from=builder-spike --chown=osuser:1001 $HOME/install $HOME/install
 ENV QEMU $HOME/install/qemu
