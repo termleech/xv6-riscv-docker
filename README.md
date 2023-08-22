@@ -1,19 +1,21 @@
 # xv6-riscv setup with docker
----
+
+This setup was forked from https://github.com/SaiVK/xv6-riscv-docker and updated with recent changes to the RISC toolchain.
+
 ## Setting up Docker image with Riscv-tools:
 __Step 1:__ Install Docker by referring to the following link: _https://docs.docker.com/engine/install/_
 
 __Step 2:__ Pull _riscv-tools_ docker image.
 ```
-docker pull svkv/riscv-tools:v1.0
+docker pull termleech/xv6-risc-tools:v1.0.0
 ```
 __Step 3:__ Verifying docker image
 ```
-docker run -it svkv/riscv-tools:v1.0
+docker run -it termleech/xv6-risc-tools:v1.0.0
 ```
-The above command results in a bash. The _/home/os-iitm_ is the home directory which houses the _install/_ directory where all the RiscV related tools and qemu binaries are located. Press Ctrl^D to exit from the docker container.
+The above command results in a bash. The _/home/csc401_ is the home directory which houses the _install/_ directory where all the RiscV related tools and qemu binaries are located. Press Ctrl^D to exit from the docker container.
 
-## Building xv6-riscv with Docker 
+## Building xv6-riscv with Docker
 __Step 1:__ Clone _xv6-riscv_ repo into your host system.
 ```
 git clone https://github.com/mit-pdos/xv6-riscv
@@ -23,19 +25,19 @@ Note the complete path of xv6-riscv in your host system using the pwd command.
 __Step 2__: Executing _xv6-riscv_ inside docker.<br/>
 Execute the following command on host system. You will get a shell within the docker container. Note: In the below command add the full path to _xv6-riscv_ repo that you have cloned to your host system after the _-v_ flag. Use the _pwd_ command to get complete path.
 ```
-docker run -it -v <path to where xv6-riscv cloned in your host system>/xv6-riscv:/home/os-iitm/xv6-riscv svkv/riscv-tools:v1.0
+docker run -it -v <path to where xv6-riscv cloned in your host system>/xv6-riscv:/home/csc401/xv6-riscv termleech/xv6-risc-tools:v1.0.0
 ```
 Inside docker container shell, execute the following command to get started with _xv6-riscv_:
 ```
 cd xv6-riscv && make qemu
 ```
-The -v flag enables shared volumes between host system and docker container. The _xv6-riscv_ cloned repo resides on the host system and is shared with the docker container. 
+The -v flag enables shared volumes between host system and docker container. The _xv6-riscv_ cloned repo resides on the host system and is shared with the docker container.
 
 ## Debugging  _xv6-riscv_ with _gdb_
 Run the following commands.
 On host system:
 ```
-docker run -it -v <path to xv6-riscv in your host system>:/home/os-iitm/xv6-riscv svkv/riscv-tools:v1.0
+docker run -it -v <path to xv6-riscv in your host system>:/home/csc401/xv6-riscv termleech/xv6-risc-tools:v1.0.0
 ```
 Inside docker container:
 ```
