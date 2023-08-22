@@ -7,11 +7,11 @@ __Step 1:__ Install Docker by referring to the following link: _https://docs.doc
 
 __Step 2:__ Pull _riscv-tools_ docker image.
 ```
-docker pull termleech/xv6-risc-tools:v1.0.0
+docker pull termleech/xv6-risc-tools:latest
 ```
 __Step 3:__ Verifying docker image
 ```
-docker run -it termleech/xv6-risc-tools:v1.0.0
+docker run -it termleech/xv6-risc-tools:latest
 ```
 The above command results in a bash. The _/home/osuser_ is the home directory which houses the _install/_ directory where all the RiscV related tools and qemu binaries are located. Press Ctrl^D to exit from the docker container.
 
